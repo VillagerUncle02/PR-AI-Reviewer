@@ -39,10 +39,10 @@ tests/PrReviewSubmit.Tests/         # xUnit v3 测试（单元/组件/冒烟）
 
 **Purpose**: 项目初始化与基础结构
 
-- [ ] T001 创建解决方案 PrReviewSubmit.sln 与双项目结构（dotnet new sln/console/xunit）：src/PrReviewSubmit 为 net10.0 控制台 MCP server，tests/PrReviewSubmit.Tests 为 net10.0 测试项目，按 plan.md 的 Project Structure 建立 src/ 与 tests/ 目录
-- [ ] T002 [P] 添加 NuGet 依赖：src/PrReviewSubmit/PrReviewSubmit.csproj 添加 ModelContextProtocol 2.1.0 与 System.IdentityModel.Tokens.Jwt；tests/PrReviewSubmit.Tests/PrReviewSubmit.Tests.csproj 添加 xUnit v3（Microsoft.Testing.Platform 原生运行器）与 NSubstitute
-- [ ] T003 [P] 在仓库根目录创建 global.json，固定 .NET 10 SDK 版本（10.0.x），保证本地与 CI 构建一致
-- [ ] T004 [P] 核验并完善 .gitignore，确保 private-key/ 与 *.pem 永不进入版本库（CHK156；现有条目不足时补充）
+- [X] T001 创建解决方案 PrReviewSubmit.sln 与双项目结构（dotnet new sln/console/xunit）：src/PrReviewSubmit 为 net10.0 控制台 MCP server，tests/PrReviewSubmit.Tests 为 net10.0 测试项目，按 plan.md 的 Project Structure 建立 src/ 与 tests/ 目录
+- [X] T002 [P] 添加 NuGet 依赖：src/PrReviewSubmit/PrReviewSubmit.csproj 添加 ModelContextProtocol 2.1.0 与 System.IdentityModel.Tokens.Jwt；tests/PrReviewSubmit.Tests/PrReviewSubmit.Tests.csproj 添加 xUnit v3（Microsoft.Testing.Platform 原生运行器）与 NSubstitute
+- [X] T003 [P] 在仓库根目录创建 global.json，固定 .NET 10 SDK 版本（10.0.x），保证本地与 CI 构建一致
+- [X] T004 [P] 核验并完善 .gitignore，确保 private-key/ 与 *.pem 永不进入版本库（CHK156；现有条目不足时补充）
 
 ---
 
