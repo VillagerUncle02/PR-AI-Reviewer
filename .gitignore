@@ -1,0 +1,27 @@
+# Credentials & secrets - NEVER commit these
+private-key/
+*.pem
+*.key
+*.p12
+*.pfx
+.env
+.env.*
+
+# .NET build outputs
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+.vs/
+
+# IDE
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
