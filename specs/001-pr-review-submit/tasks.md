@@ -52,17 +52,17 @@ tests/PrReviewSubmit.Tests/         # xUnit v3 测试（单元/组件/冒烟）
 
 **⚠️ CRITICAL**: 本阶段完成后，用户故事才能开始
 
-- [ ] T005 [P] 实现 GitHubAppOptions 于 src/PrReviewSubmit/Configuration/GitHubAppOptions.cs（环境变量绑定 App ID / 安装 ID / 私钥路径；BaseUrl 固定 api.github.com，FR-016）
-- [ ] T006 [P] 实现 ReviewSubmitRequest 于 src/PrReviewSubmit/Domain/ReviewSubmitRequest.cs（owner/repo/pullNumber/body/comments，字段与校验规则见 data-model.md）
-- [ ] T007 [P] 实现 ReviewSubmitResult 于 src/PrReviewSubmit/Domain/ReviewSubmitResult.cs（success: reviewId/htmlUrl；error: code/message/httpStatus/details，见 tool-contract.md）
-- [ ] T008 [P] 实现 ReviewSubmitErrorCode 于 src/PrReviewSubmit/Domain/ReviewSubmitErrorCode.cs（9 个错误码枚举：INVALID_PAYLOAD / CREDENTIALS_INVALID / APP_NOT_INSTALLED / TARGET_NOT_FOUND / PR_NOT_OPEN / REVIEW_UNPROCESSABLE / RATE_LIMITED / NETWORK_ERROR / UNEXPECTED_ERROR）
-- [ ] T009 [P] 实现 ToolJsonContext 于 src/PrReviewSubmit/Json/ToolJsonContext.cs（工具参数与结果的 JsonSerializerContext，供编译期序列化）
-- [ ] T010 [P] 实现 IGitHubReviewClient 于 src/PrReviewSubmit/GitHub/IGitHubReviewClient.cs（GetInstallationTokenAsync / GetPullRequestStateAsync / CreateReviewAsync，可替身测试）
-- [ ] T011 [P] 实现 GitHubAppAuthClient 于 src/PrReviewSubmit/GitHub/GitHubAppAuthClient.cs（PEM → RS256 JWT（iss/iat-60s/exp≤10min）→ POST /app/installations/{id}/access_tokens，repositories 限定目标仓库）
-- [ ] T012 [P] 实现 GitHubErrorMapper 于 src/PrReviewSubmit/GitHub/GitHubErrorMapper.cs（401/403/404/422/429/5xx/网络 → 错误码；details 脱敏并截断至 2048 字符；Retry-After 透传）
-- [ ] T013 [P] 实现 ReviewPayloadValidator 于 src/PrReviewSubmit/Validation/ReviewPayloadValidator.cs（FR-002/FR-003：owner/repo trim 后非空、pullNumber ≥ 1、body/comments 按 Unicode 空白 trim 判定、comments 空数组合法/null 非法、提交保持原始内容）
-- [ ] T014 实现 GitHubReviewClient 于 src/PrReviewSubmit/GitHub/GitHubReviewClient.cs（三请求链路：令牌交换 → GET /pulls/{n} 仅消费 state/merged（FR-004，非 open 或 merged → PR_NOT_OPEN）→ POST create review（event=COMMENT，FR-013）；各请求 HttpClient 超时 10s；无隐式重试（FR-010））
-- [ ] T015 [P] 创建 GitHub Actions 工作流于 .github/workflows/ci.yml（触发：pull_request 到 main + push 到 main + workflow_dispatch；steps：checkout、setup-dotnet 10.0.x、dotnet restore、dotnet build PrReviewSubmit.sln、dotnet test tests/PrReviewSubmit.Tests、私钥排除检查（git ls-files 中不得出现 private-key/** 或 *.pem，CHK156）；不包含任何部署步骤，冒烟测试默认跳过）
+- [X] T005 [P] 实现 GitHubAppOptions 于 src/PrReviewSubmit/Configuration/GitHubAppOptions.cs（环境变量绑定 App ID / 安装 ID / 私钥路径；BaseUrl 固定 api.github.com，FR-016）
+- [X] T006 [P] 实现 ReviewSubmitRequest 于 src/PrReviewSubmit/Domain/ReviewSubmitRequest.cs（owner/repo/pullNumber/body/comments，字段与校验规则见 data-model.md）
+- [X] T007 [P] 实现 ReviewSubmitResult 于 src/PrReviewSubmit/Domain/ReviewSubmitResult.cs（success: reviewId/htmlUrl；error: code/message/httpStatus/details，见 tool-contract.md）
+- [X] T008 [P] 实现 ReviewSubmitErrorCode 于 src/PrReviewSubmit/Domain/ReviewSubmitErrorCode.cs（9 个错误码枚举：INVALID_PAYLOAD / CREDENTIALS_INVALID / APP_NOT_INSTALLED / TARGET_NOT_FOUND / PR_NOT_OPEN / REVIEW_UNPROCESSABLE / RATE_LIMITED / NETWORK_ERROR / UNEXPECTED_ERROR）
+- [X] T009 [P] 实现 ToolJsonContext 于 src/PrReviewSubmit/Json/ToolJsonContext.cs（工具参数与结果的 JsonSerializerContext，供编译期序列化）
+- [X] T010 [P] 实现 IGitHubReviewClient 于 src/PrReviewSubmit/GitHub/IGitHubReviewClient.cs（GetInstallationTokenAsync / GetPullRequestStateAsync / CreateReviewAsync，可替身测试）
+- [X] T011 [P] 实现 GitHubAppAuthClient 于 src/PrReviewSubmit/GitHub/GitHubAppAuthClient.cs（PEM → RS256 JWT（iss/iat-60s/exp≤10min）→ POST /app/installations/{id}/access_tokens，repositories 限定目标仓库）
+- [X] T012 [P] 实现 GitHubErrorMapper 于 src/PrReviewSubmit/GitHub/GitHubErrorMapper.cs（401/403/404/422/429/5xx/网络 → 错误码；details 脱敏并截断至 2048 字符；Retry-After 透传）
+- [X] T013 [P] 实现 ReviewPayloadValidator 于 src/PrReviewSubmit/Validation/ReviewPayloadValidator.cs（FR-002/FR-003：owner/repo trim 后非空、pullNumber ≥ 1、body/comments 按 Unicode 空白 trim 判定、comments 空数组合法/null 非法、提交保持原始内容）
+- [X] T014 实现 GitHubReviewClient 于 src/PrReviewSubmit/GitHub/GitHubReviewClient.cs（三请求链路：令牌交换 → GET /pulls/{n} 仅消费 state/merged（FR-004，非 open 或 merged → PR_NOT_OPEN）→ POST create review（event=COMMENT，FR-013）；各请求 HttpClient 超时 10s；无隐式重试（FR-010））
+- [X] T015 [P] 创建 GitHub Actions 工作流于 .github/workflows/ci.yml（触发：pull_request 到 main + push 到 main + workflow_dispatch；steps：checkout、setup-dotnet 10.0.x、dotnet restore、dotnet build PrReviewSubmit.sln、dotnet test tests/PrReviewSubmit.Tests、私钥排除检查（git ls-files 中不得出现 private-key/** 或 *.pem，CHK156）；不包含任何部署步骤，冒烟测试默认跳过）
 
 **Checkpoint**: 基础设施就绪 —— 可开始用户故事实现
 

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore PrReviewSubmit.sln
+
+      - name: Build
+        run: dotnet build PrReviewSubmit.sln --no-restore
+
+      - name: Test
+        run: dotnet test PrReviewSubmit.sln --no-build
+
+      - name: Private key exclusion check (CHK156)
+        shell: bash
+        run: |
+          if git ls-files | grep -E "(^|/)private-key/|\.pem$|\.key$"; then
+            echo "::error::private-key/ or *.pem/*.key files must never be committed"
+            exit 1
+          fi
