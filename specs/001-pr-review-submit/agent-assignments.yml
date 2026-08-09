@@ -1,0 +1,158 @@
+# Agent Assignments
+# Feature: PR Review Submit（PR 审查结果上传）
+# Generated: 2026-08-10
+# Command: /speckit.agent-assign.assign
+
+agents_scanned:
+  - name: "UI Designer"
+    source: "project"
+    description: "Expert UI designer specializing in visual design systems, component libraries, and pixel-perfect interface creation."
+  - name: "Backend Architect"
+    source: "project"
+    description: "Senior backend architect specializing in scalable system design, database architecture, API development, and cloud infrastructure."
+  - name: "Code Reviewer"
+    source: "project"
+    description: "Expert code reviewer focused on correctness, maintainability, security, and performance."
+  - name: "Desktop App Engineer"
+    source: "project"
+    description: "Expert desktop application engineer for Electron and Tauri."
+  - name: "DevOps Automator"
+    source: "project"
+    description: "Expert DevOps engineer specializing in infrastructure automation, CI/CD pipeline development, and cloud operations."
+  - name: "Frontend Developer"
+    source: "project"
+    description: "Expert frontend developer specializing in modern web technologies, React/Vue/Angular frameworks, UI implementation."
+  - name: "Git Workflow Master"
+    source: "project"
+    description: "Expert in Git workflows, branching strategies, and version control best practices."
+  - name: "Minimal Change Engineer"
+    source: "project"
+    description: "Engineering specialist focused on minimum-viable diffs and preventing scope creep."
+  - name: "Multi-Agent Systems Architect"
+    source: "project"
+    description: "Systems architect specializing in the design, coordination, and governance of multi-agent AI pipelines."
+  - name: "Prompt Engineer"
+    source: "project"
+    description: "Specialist in crafting, testing, and systematically optimizing prompts for LLMs."
+  - name: "Software Architect"
+    source: "project"
+    description: "Expert software architect specializing in system design, domain-driven design, and architectural decision-making."
+  - name: "Technical Writer"
+    source: "project"
+    description: "Expert technical writer specializing in developer documentation, API references, README files, and tutorials."
+
+assignments:
+  T001:
+    agent: "Backend Architect"
+    reason: ".NET 项目初始化（解决方案/双项目结构）"
+  T002:
+    agent: "Backend Architect"
+    reason: "后端 NuGet 依赖配置（MCP SDK/xUnit/NSubstitute）"
+  T003:
+    agent: "Backend Architect"
+    reason: ".NET 构建配置（global.json 固定 SDK）"
+  T004:
+    agent: "default"
+    reason: "通用仓库卫生任务，无需专用 Agent"
+  T005:
+    agent: "Backend Architect"
+    reason: "C# 配置绑定实现"
+  T006:
+    agent: "Backend Architect"
+    reason: "领域模型创建"
+  T007:
+    agent: "Backend Architect"
+    reason: "领域模型创建"
+  T008:
+    agent: "Backend Architect"
+    reason: "领域模型/错误码枚举"
+  T009:
+    agent: "Backend Architect"
+    reason: "C# 序列化上下文实现"
+  T010:
+    agent: "Backend Architect"
+    reason: "后端接口设计"
+  T011:
+    agent: "Backend Architect"
+    reason: "认证与安全实现（JWT/安装令牌）"
+  T012:
+    agent: "Backend Architect"
+    reason: "错误映射实现"
+  T013:
+    agent: "Backend Architect"
+    reason: "载荷校验逻辑实现"
+  T014:
+    agent: "Backend Architect"
+    reason: "核心后端实现（三请求链路）"
+  T015:
+    agent: "DevOps Automator"
+    reason: "GitHub Actions CI 流水线"
+  T016:
+    agent: "Backend Architect"
+    reason: "C# 组件测试编写（MCP 成功路径）"
+  T017:
+    agent: "Backend Architect"
+    reason: "C# 单元测试编写（载荷校验）"
+  T018:
+    agent: "Backend Architect"
+    reason: "MCP 工具实现"
+  T019:
+    agent: "Backend Architect"
+    reason: "MCP stdio 宿主实现"
+  T020:
+    agent: "Backend Architect"
+    reason: "核心流程编排实现"
+  T021:
+    agent: "Backend Architect"
+    reason: "C# 单元测试编写（错误映射）"
+  T022:
+    agent: "Backend Architect"
+    reason: "C# 单元测试编写（认证客户端）"
+  T023:
+    agent: "Backend Architect"
+    reason: "C# 组件测试编写（失败路径）"
+  T024:
+    agent: "Backend Architect"
+    reason: "C# 组件测试编写（启动配置）"
+  T025:
+    agent: "Backend Architect"
+    reason: "核心流程失败编排实现"
+  T026:
+    agent: "Backend Architect"
+    reason: "启动配置校验实现（FR-015）"
+  T027:
+    agent: "Backend Architect"
+    reason: "C# 单元测试编写（FR-016 断言）"
+  T028:
+    agent: "Backend Architect"
+    reason: "C# 组件测试编写（无重试行为）"
+  T029:
+    agent: "Backend Architect"
+    reason: "C# 组件测试编写（调用方重试）"
+  T030:
+    agent: "Technical Writer"
+    reason: "技术文档（重试/去重语义）"
+  T031:
+    agent: "Backend Architect"
+    reason: "后端实现核验（无状态/独立调用）"
+  T032:
+    agent: "Technical Writer"
+    reason: "技术文档（使用说明/环境变量）"
+  T033:
+    agent: "Backend Architect"
+    reason: "C# 测试编写（契约一致性）"
+  T034:
+    agent: "Backend Architect"
+    reason: "C# 测试编写（冒烟脚手架）"
+  T035:
+    agent: "Backend Architect"
+    reason: "C# 测试编写（零写入断言）"
+  T036:
+    agent: "DevOps Automator"
+    reason: "端到端验证/门禁执行"
+  T037:
+    agent: "Technical Writer"
+    reason: "技术文档（README 状态更新）"
+  T038:
+    agent: "Backend Architect"
+    reason: "代码质量收尾（dotnet format/清理警告）"

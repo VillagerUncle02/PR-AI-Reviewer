@@ -25,3 +25,5 @@ Thumbs.db
 *.log
 logs/
 
+# Generated caches
+.specify/extensions/.cache/
