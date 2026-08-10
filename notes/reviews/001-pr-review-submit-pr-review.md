@@ -20,6 +20,7 @@
 | 2 | 🔴 | src/PrReviewSubmit/Json/ToolJsonContext.cs | 结果 JSON 中 `code` 枚举默认序列化为数字（如 `5`），而 tool-contract.md 要求字符串错误码（如 `"INVALID_PAYLOAD"`） | 已修复（UseStringEnumConverter=true），并加单元回归测试 |
 | 3 | 🔴 | src/PrReviewSubmit/GitHub/GitHubAppAuthClient.cs | CreateJwt 将 using 作用域内 RSA 实例交给 RsaSecurityKey，JWT 签名 provider 缓存复用已释放实例 → 第二次调用 ObjectDisposedException | 已修复（导出 RSA 参数构造 key），StatelessnessTests 回归覆盖 |
 | 4 | 🔴 | src/PrReviewSubmit/Program.cs | 运行期 stderr 输出框架 info 日志，违反 FR-011/CHK162 | 已修复（ClearProviders），ZeroWriteTests 进程级回归覆盖 |
+| 5 | 🔴 | src/PrReviewSubmit/GitHub/GitHubAppAuthClient.cs + GitHubReviewClient.cs | GitHub REST 请求缺少 User-Agent，真实冒烟返回 403（GitHub 强制要求） | 已修复（GitHubAppOptions.UserAgent 常量 + 所有请求统一添加），单元回归覆盖；真实冒烟 4/4 通过 |
 
 ## 宪法合规自查
 
@@ -31,7 +32,7 @@
 
 ## 遗留 TODO
 
-- 真实 GitHub App 冒烟（场景 A–F，含 SC-008 30 秒计时）：需配置 GITHUB_APP_ID / GITHUB_APP_INSTALLATION_ID / GITHUB_PRIVATE_KEY_PATH（当前 private-key/ 有私钥但环境变量未设置、文件名非默认 github-app.pem）后由人工或凭据环境执行 SmokeTests
+- 真实 GitHub App 冒烟：已用用户提供的凭据执行（4 通过 / 1 跳过），PR #39 上有 bot review 证据；待仓库出现 closed/merged PR 时补跑 PR_NOT_OPEN 子场景
 - PR 合并等待人工 Approve；CI 不含 dotnet format（本地门禁已覆盖）
 
 ## 结论

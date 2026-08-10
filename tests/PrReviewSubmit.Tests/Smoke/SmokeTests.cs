@@ -70,10 +70,13 @@ public class SmokeTests
 
         var comments = await GetJsonArrayAsync(
             harness.Http,
-            $"repos/{config.Owner}/{config.Repo}/pulls/{config.PullNumber}/comments?review_id={reviewId}",
+            $"repos/{config.Owner}/{config.Repo}/pulls/{config.PullNumber}/comments",
             token,
             TestContext.Current.CancellationToken);
-        var comment = Assert.Single(comments.EnumerateArray());
+        var comment = Assert.Single(comments.EnumerateArray(), item =>
+            item.TryGetProperty("pull_request_review_id", out var reviewIdElement)
+            && reviewIdElement.ValueKind == JsonValueKind.Number
+            && reviewIdElement.GetInt64() == reviewId);
         Assert.Equal(config.CommentPath, comment.GetProperty("path").GetString());
         Assert.Equal(config.CommentLine, comment.GetProperty("line").GetInt32());
         Assert.Equal(config.CommentSide, comment.GetProperty("side").GetString());
@@ -263,6 +266,10 @@ public class SmokeTests
             Assert.Skip($"GITHUB_APP_ID 不是正整数：{appIdText}");
         if (!long.TryParse(installationIdText, out var installationId) || installationId <= 0)
             Assert.Skip($"GITHUB_APP_INSTALLATION_ID 不是正整数：{installationIdText}");
+        // 相对密钥路径按仓库根解析（README/quickstart 的 private-key/ 约定），
+        // 不依赖测试运行器的工作目录（testhost / MTP runner 的 CWD 不一定是仓库根）。
+        if (!Path.IsPathRooted(privateKeyPath))
+            privateKeyPath = Path.GetFullPath(Path.Combine(RepoRoot(), privateKeyPath));
         if (!File.Exists(privateKeyPath))
             Assert.Skip($"GITHUB_PRIVATE_KEY_PATH 文件不存在：{privateKeyPath}");
 
@@ -324,6 +331,9 @@ public class SmokeTests
             ["body"] = body,
             ["comments"] = comments,
         };
+
+    private static string RepoRoot()
+        => Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../.."));
 
     private static async Task<JsonElement> CallToolAsync(
         McpClient client,
@@ -392,6 +402,9 @@ public class SmokeTests
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        request.Headers.UserAgent.TryParseAdd(GitHubAppOptions.UserAgent);
+        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
+        request.Headers.TryAddWithoutValidation(GitHubAppOptions.ApiVersionHeader, GitHubAppOptions.ApiVersion);
         using var response = await http.SendAsync(request, cancellationToken);
         var body = await response.Content.ReadAsStringAsync(cancellationToken);
         Assert.True(
