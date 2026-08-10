@@ -6,6 +6,7 @@ private-key/
 *.pfx
 .env
 .env.*
+.git-credential-helper.cmd
 
 # .NET build outputs
 bin/
