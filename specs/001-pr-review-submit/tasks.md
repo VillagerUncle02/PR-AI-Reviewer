@@ -120,13 +120,13 @@ tests/PrReviewSubmit.Tests/         # xUnit v3 测试（单元/组件/冒烟）
 
 ### Tests for User Story 3（先写、预期失败）⚠️
 
-- [ ] T028 [P] [US3] 编写无重试行为测试于 tests/PrReviewSubmit.Tests/Component/NoRetryBehaviorTests.cs（失败调用后等待观察：GitHub 请求计数不变、无后台自动请求、无自动补偿）
-- [ ] T029 [P] [US3] 编写调用方重试测试于 tests/PrReviewSubmit.Tests/Component/RetryFlowTests.cs（修正载荷后的第二次调用成功，且恰好产生一条新 review）
+- [X] T028 [P] [US3] 编写无重试行为测试于 tests/PrReviewSubmit.Tests/Component/NoRetryBehaviorTests.cs（失败调用后等待观察：GitHub 请求计数不变、无后台自动请求、无自动补偿）
+- [X] T029 [P] [US3] 编写调用方重试测试于 tests/PrReviewSubmit.Tests/Component/RetryFlowTests.cs（修正载荷后的第二次调用成功，且恰好产生一条新 review）
 
 ### Implementation for User Story 3
 
-- [ ] T030 [P] [US3] 在 README.md 文档化重试/去重语义（工具永不自动重试、不保证幂等；失败后调用方核验 PR 再决定重试；RATE_LIMITED/NETWORK_ERROR 在 details.retryable=true 提示可重试）
-- [ ] T031 [P] [US3] 核验每次调用独立无状态于 src/PrReviewSubmit/GitHub/GitHubReviewClient.cs（每次调用重新读取私钥、生成新令牌、不缓存、不共享可变状态；替换为有效新私钥后下一次调用即生效、无需重启；进程内并发调用互不影响）
+- [X] T030 [P] [US3] 在 README.md 文档化重试/去重语义（工具永不自动重试、不保证幂等；失败后调用方核验 PR 再决定重试；RATE_LIMITED/NETWORK_ERROR 在 details.retryable=true 提示可重试）
+- [X] T031 [P] [US3] 核验每次调用独立无状态于 src/PrReviewSubmit/GitHub/GitHubReviewClient.cs（每次调用重新读取私钥、生成新令牌、不缓存、不共享可变状态；替换为有效新私钥后下一次调用即生效、无需重启；进程内并发调用互不影响）
 
 **Checkpoint**: 三个用户故事全部可独立验证
 
