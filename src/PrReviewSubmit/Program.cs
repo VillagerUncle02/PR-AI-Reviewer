@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PrReviewSubmit.Configuration;
 using PrReviewSubmit.GitHub;
+using PrReviewSubmit.Infrastructure;
 using PrReviewSubmit.MCP;
 
 try
@@ -14,12 +15,10 @@ try
         consoleLogOptions.LogToStandardErrorThreshold = LogLevel.Trace;
     });
 
-    builder.Services.AddSingleton(GitHubAppOptions.FromEnvironment());
-    builder.Services.AddSingleton(_ => new HttpClient
-    {
-        BaseAddress = new Uri(GitHubAppOptions.BaseUrl),
-        Timeout = TimeSpan.FromSeconds(10),
-    });
+    var options = GitHubAppOptions.FromEnvironment();
+    StartupConfigurationValidator.Validate(options);
+    builder.Services.AddSingleton(options);
+    builder.Services.AddGitHubHttpClient();
     builder.Services.AddSingleton<IGitHubReviewClient, GitHubReviewClient>();
     builder.Services.AddSingleton<ReviewSubmitTool>();
     builder.Services

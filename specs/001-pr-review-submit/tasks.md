@@ -97,16 +97,16 @@ tests/PrReviewSubmit.Tests/         # xUnit v3 测试（单元/组件/冒烟）
 
 ### Tests for User Story 2（先写、预期失败）⚠️
 
-- [ ] T021 [P] [US2] 补齐错误映射单元测试覆盖于 tests/PrReviewSubmit.Tests/Unit/ErrorMapperTests.cs（401/403/404/422/429/5xx/网络 → 对应错误码；Retry-After 透传；details 脱敏与 2048 字符截断；组件已在 T012 实现，本任务为覆盖补齐）
-- [ ] T022 [P] [US2] 补齐认证客户端单元测试覆盖于 tests/PrReviewSubmit.Tests/Unit/AppAuthClientTests.cs（JWT claims/iat/exp、PEM 解析、令牌交换成功/401/403/404/429、201 响应缺字段或类型异常 → UNEXPECTED_ERROR；新增：调用间删除私钥或替换为不可解析内容后再次调用 → CREDENTIALS_INVALID 且无 GitHub 请求；替换为有效新私钥 → 下一次调用按新私钥成功、无需重启（2026-08-10 澄清）；组件已在 T011 实现，本任务为覆盖补齐）
-- [ ] T023 [P] [US2] 编写失败路径组件测试于 tests/PrReviewSubmit.Tests/Component/ReviewSubmitFlowTests.cs（PR closed/merged → PR_NOT_OPEN；404 → TARGET_NOT_FOUND；403 → APP_NOT_INSTALLED；422 → REVIEW_UNPROCESSABLE；空 diff PR + comments → 422 → REVIEW_UNPROCESSABLE（spec 边界）；提交后超时 → NETWORK_ERROR 且提示 review 可能已创建；断言无部分成功）
-- [ ] T024 [P] [US2] 编写启动配置校验测试于 tests/PrReviewSubmit.Tests/Component/StartupConfigurationTests.cs（FR-015：App ID/安装 ID 缺失或非正整数、私钥路径不存在/不可读/不可解析为 RSA → 非零退出码 + stderr 明确错误；断言无网络请求）
+- [X] T021 [P] [US2] 补齐错误映射单元测试覆盖于 tests/PrReviewSubmit.Tests/Unit/ErrorMapperTests.cs（401/403/404/422/429/5xx/网络 → 对应错误码；Retry-After 透传；details 脱敏与 2048 字符截断；组件已在 T012 实现，本任务为覆盖补齐）
+- [X] T022 [P] [US2] 补齐认证客户端单元测试覆盖于 tests/PrReviewSubmit.Tests/Unit/AppAuthClientTests.cs（JWT claims/iat/exp、PEM 解析、令牌交换成功/401/403/404/429、201 响应缺字段或类型异常 → UNEXPECTED_ERROR；新增：调用间删除私钥或替换为不可解析内容后再次调用 → CREDENTIALS_INVALID 且无 GitHub 请求；替换为有效新私钥 → 下一次调用按新私钥成功、无需重启（2026-08-10 澄清）；组件已在 T011 实现，本任务为覆盖补齐）
+- [X] T023 [P] [US2] 编写失败路径组件测试于 tests/PrReviewSubmit.Tests/Component/ReviewSubmitFlowTests.cs（PR closed/merged → PR_NOT_OPEN；404 → TARGET_NOT_FOUND；403 → APP_NOT_INSTALLED；422 → REVIEW_UNPROCESSABLE；空 diff PR + comments → 422 → REVIEW_UNPROCESSABLE（spec 边界）；提交后超时 → NETWORK_ERROR 且提示 review 可能已创建；断言无部分成功）
+- [X] T024 [P] [US2] 编写启动配置校验测试于 tests/PrReviewSubmit.Tests/Component/StartupConfigurationTests.cs（FR-015：App ID/安装 ID 缺失或非正整数、私钥路径不存在/不可读/不可解析为 RSA → 非零退出码 + stderr 明确错误；断言无网络请求）
 
 ### Implementation for User Story 2
 
-- [ ] T025 [P] [US2] 实现失败编排于 src/PrReviewSubmit/MCP/ReviewSubmitTool.cs（先本地校验：INVALID_PAYLOAD 且零 GitHub 请求；客户端各阶段失败统一映射为结构化错误 JSON；无隐式重试）
-- [ ] T026 [P] [US2] 实现启动配置校验于 src/PrReviewSubmit/Program.cs（FR-015：App ID/安装 ID 须为正整数、私钥路径存在且可读、私钥可解析为 RSA；失败以非零退出码退出并输出 stderr 错误）
-- [ ] T027 [P] [US2] 添加 FR-016 配置断言测试于 tests/PrReviewSubmit.Tests/Unit/GitHubClientConfigurationTests.cs（HttpClient.BaseAddress 恒为 api.github.com、TLS 证书校验开启且不可禁用）
+- [X] T025 [P] [US2] 实现失败编排于 src/PrReviewSubmit/MCP/ReviewSubmitTool.cs（先本地校验：INVALID_PAYLOAD 且零 GitHub 请求；客户端各阶段失败统一映射为结构化错误 JSON；无隐式重试）
+- [X] T026 [P] [US2] 实现启动配置校验于 src/PrReviewSubmit/Program.cs（FR-015：App ID/安装 ID 须为正整数、私钥路径存在且可读、私钥可解析为 RSA；失败以非零退出码退出并输出 stderr 错误）
+- [X] T027 [P] [US2] 添加 FR-016 配置断言测试于 tests/PrReviewSubmit.Tests/Component/GitHubClientConfigurationTests.cs（HttpClient.BaseAddress 恒为 api.github.com、TLS 证书校验开启且不可禁用）
 
 **Checkpoint**: User Story 1 与 User Story 2 均独立可测（成功 + 全失败路径）
 

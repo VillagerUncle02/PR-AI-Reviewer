@@ -41,4 +41,5 @@ public sealed class GitHubAppOptions
 }
 
 /// <summary>启动期配置错误（FR-015：启动即失败，非零退出码 + stderr 明确错误）。</summary>
-public sealed class GitHubConfigurationException(string message) : Exception(message);
+public sealed class GitHubConfigurationException(string message, Exception? innerException = null)
+    : Exception(message, innerException);

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using PrReviewSubmit.Domain;
 using PrReviewSubmit.Json;
@@ -51,6 +52,11 @@ public static class GitHubErrorMapper
 {
     private const int MaxDetailsLength = 2048;
     private const int MaxMessageLength = 512;
+    private static readonly JsonSerializerOptions MeasurementOptions = new(JsonSerializerDefaults.Web)
+    {
+        // 按 Unicode 字符计量（CHK107/CHK154）：非 ASCII 字符不被转义成 \uXXXX。
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+    };
 
     public static MappedError MapResponse(HttpStatusCode status, string? body, GitHubRequestStage stage, int? retryAfterSeconds = null)
     {
@@ -183,7 +189,7 @@ public static class GitHubErrorMapper
     {
         try
         {
-            return JsonSerializer.Serialize(details, ToolJsonContext.Default.GitHubErrorDetails).Length;
+            return JsonSerializer.Serialize(details, MeasurementOptions).Length;
         }
         catch
         {
