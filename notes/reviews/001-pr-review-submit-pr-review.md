@@ -2,13 +2,15 @@
 
 - 时间：2026-08-10
 - PR：[#39](https://github.com/VillagerUncle02/PR-AI-Reviewer/pull/39)（main ← 001-pr-review-submit）
-- 范围：T001–T020（Phase 1–3），96 个文件，+9553/-11
+- 范围：T001–T038（Phase 1–6 全部任务）
 - 审查模式：降级审查（REVIEWER 未配置/子代理不可靠，主循环审查）
+- 后续更新：2026-08-11 全量复核（Phase 4–6 追加实现后）
 
 ## 门禁与 CI 证据
 
-- 本地门禁：build 0 警告 0 错误；31 个测试全部通过；private-key 排除检查通过；dotnet format 通过
-- CI：run 31377737114（pull_request）→ success（restore/build/test/私钥排除）
+- 本地门禁：build 0 警告 0 错误；87 个测试（82 通过 + 5 冒烟跳过，凭据未配置）；private-key 排除检查通过；dotnet format 通过
+- CI（pull_request，全部 success）：31377737114（0bc07aa）、31378023826（b075f25）、31379051809（1ab8e5b）、31379517854（ab89c27）
+- 进程级验证：MCP 会话 stdout 仅 JSON-RPC、stderr 为空（FR-011/CHK162，ZeroWriteTests）
 
 ## Findings
 
@@ -16,6 +18,8 @@
 |---|------|-----------|------|------|
 | 1 | 🔴 | src/PrReviewSubmit/GitHub/GitHubReviewClient.cs | create review 载荷的 comments 条目用 `new { c.Path, ... }`，STJ 默认按属性名序列化 → 发送 `Path/Line/Side/Body`（PascalCase），不符合 GitHub REST 契约的 `path/line/side/body`，会导致 422 或评论字段丢失 | 已修复（改为显式小写成员名），并加组件回归测试 |
 | 2 | 🔴 | src/PrReviewSubmit/Json/ToolJsonContext.cs | 结果 JSON 中 `code` 枚举默认序列化为数字（如 `5`），而 tool-contract.md 要求字符串错误码（如 `"INVALID_PAYLOAD"`） | 已修复（UseStringEnumConverter=true），并加单元回归测试 |
+| 3 | 🔴 | src/PrReviewSubmit/GitHub/GitHubAppAuthClient.cs | CreateJwt 将 using 作用域内 RSA 实例交给 RsaSecurityKey，JWT 签名 provider 缓存复用已释放实例 → 第二次调用 ObjectDisposedException | 已修复（导出 RSA 参数构造 key），StatelessnessTests 回归覆盖 |
+| 4 | 🔴 | src/PrReviewSubmit/Program.cs | 运行期 stderr 输出框架 info 日志，违反 FR-011/CHK162 | 已修复（ClearProviders），ZeroWriteTests 进程级回归覆盖 |
 
 ## 宪法合规自查
 
@@ -27,9 +31,9 @@
 
 ## 遗留 TODO
 
-- Phase 4（T021–T027）：失败路径测试、失败编排、启动配置校验（FR-015）、FR-016 断言
-- Phase 5/6：README 文档、无重试/调用方重试测试、契约一致性测试、冒烟/端到端
+- 真实 GitHub App 冒烟（场景 A–F，含 SC-008 30 秒计时）：需配置 GITHUB_APP_ID / GITHUB_APP_INSTALLATION_ID / GITHUB_PRIVATE_KEY_PATH（当前 private-key/ 有私钥但环境变量未设置、文件名非默认 github-app.pem）后由人工或凭据环境执行 SmokeTests
+- PR 合并等待人工 Approve；CI 不含 dotnet format（本地门禁已覆盖）
 
 ## 结论
 
-PASS（基于当前 PR 范围 T001–T020；后续阶段任务会继续追加提交到本分支或链式分支，需在新一轮 PR 审查中复核）。
+PASS（T001–T038 全量复核；真实凭据冒烟为遗留人工项）。

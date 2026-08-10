@@ -136,13 +136,13 @@ tests/PrReviewSubmit.Tests/         # xUnit v3 测试（单元/组件/冒烟）
 
 **Purpose**: 跨用户故事的收尾与质量加固
 
-- [ ] T032 [P] 添加使用文档于 README.md（MCP 客户端注册 JSON、环境变量说明、private-key 路径约定、quickstart 链接）
-- [ ] T033 [P] 添加工具契约一致性测试于 tests/PrReviewSubmit.Tests/Component/ToolContractConsistencyTests.cs（断言 MCP 暴露的工具集合恰为 {submit_pr_review}（FR-001 唯一工具），且参数名/类型/必填与 contracts/submit-review.schema.json 一致，CHK142）
-- [ ] T034 [P] 添加可选冒烟测试脚手架于 tests/PrReviewSubmit.Tests/Smoke/SmokeTests.cs（未设置 GITHUB_APP_ID / GITHUB_APP_INSTALLATION_ID / GITHUB_PRIVATE_KEY_PATH 时自动跳过；覆盖 quickstart 场景 A/B/C/D）
-- [ ] T035 [P] 添加零写入/零输出测试于 tests/PrReviewSubmit.Tests/Component/ZeroWriteTests.cs（SC-007：调用前后工作目录与临时目录无新增文件；运行期除 MCP 协议外无 stdout/stderr 输出）
-- [ ] T036 按 quickstart.md 执行端到端验证（dotnet build PrReviewSubmit.sln；dotnet test tests/PrReviewSubmit.Tests；有凭据时手工冒烟场景 A~F；核验 SC-007/SC-008）
-- [ ] T037 更新 README.md 项目状态（规划阶段 → 已实现），补充 tasks.md/quickstart.md 链接
-- [ ] T038 执行 dotnet format 并清理警告与无用代码于 src/PrReviewSubmit 与 tests/PrReviewSubmit.Tests，确保解决方案无编译警告
+- [X] T032 [P] 添加使用文档于 README.md（MCP 客户端注册 JSON、环境变量说明、private-key 路径约定、quickstart 链接）
+- [X] T033 [P] 添加工具契约一致性测试于 tests/PrReviewSubmit.Tests/Component/ToolContractConsistencyTests.cs（断言 MCP 暴露的工具集合恰为 {submit_pr_review}（FR-001 唯一工具），且参数名/类型/必填与 contracts/submit-review.schema.json 一致，CHK142）
+- [X] T034 [P] 添加可选冒烟测试脚手架于 tests/PrReviewSubmit.Tests/Smoke/SmokeTests.cs（未设置 GITHUB_APP_ID / GITHUB_APP_INSTALLATION_ID / GITHUB_PRIVATE_KEY_PATH 时自动跳过；覆盖 quickstart 场景 A/B/C/D）
+- [X] T035 [P] 添加零写入/零输出测试于 tests/PrReviewSubmit.Tests/Component/ZeroWriteTests.cs（SC-007：调用前后工作目录与临时目录无新增文件；运行期除 MCP 协议外无 stdout/stderr 输出）
+- [X] T036 按 quickstart.md 执行端到端验证（dotnet build PrReviewSubmit.sln；dotnet test tests/PrReviewSubmit.Tests；有凭据时手工冒烟场景 A~F；核验 SC-007/SC-008）——已完成自动化与进程级验证；真实 GitHub App 冒烟因凭据未配置（三件套环境变量缺失）留人工执行
+- [X] T037 更新 README.md 项目状态（规划阶段 → 已实现），补充 tasks.md/quickstart.md 链接
+- [X] T038 执行 dotnet format 并清理警告与无用代码于 src/PrReviewSubmit 与 tests/PrReviewSubmit.Tests，确保解决方案无编译警告
 
 ---
 
