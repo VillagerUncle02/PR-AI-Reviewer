@@ -26,6 +26,11 @@
 - run id：31407830598（event=pull_request，head=1e99335acdf0fc294280d171144071817da79dae）
 - 结论：success（build + test + private-key 排除检查全部通过）
 
+## 真实冒烟修复 CI（15cf277）
+
+- run id：31412092472（event=pull_request，head=15cf277fc471598910d2895382e4c4ccc454a798）
+- 结论：success（build + test + private-key 排除检查全部通过；含 User-Agent 修复与冒烟测试修正）
+
 ## 运行时自适应
 
 1. CI 工作流尚未合入 main，`gh workflow run ci.yml --ref <branch>` 返回 404
