@@ -9,11 +9,10 @@ using PrReviewSubmit.MCP;
 try
 {
     var builder = Host.CreateApplicationBuilder(args);
-    builder.Logging.AddConsole(consoleLogOptions =>
-    {
-        // MCP stdio 协议独占 stdout：所有日志一律走 stderr。
-        consoleLogOptions.LogToStandardErrorThreshold = LogLevel.Trace;
-    });
+    // FR-011/CHK162：运行期除 MCP 协议与工具调用结果外不得产生其他 stdout/stderr 输出，
+    // 因此清除全部日志提供程序（含默认 Console 提供程序），宿主/框架日志不再输出。
+    // 启动期配置错误（FR-015）仍由下方 catch 显式输出到 stderr。
+    builder.Logging.ClearProviders();
 
     var options = GitHubAppOptions.FromEnvironment();
     StartupConfigurationValidator.Validate(options);
