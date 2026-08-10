@@ -76,14 +76,14 @@ tests/PrReviewSubmit.Tests/         # xUnit v3 测试（单元/组件/冒烟）
 
 ### Tests for User Story 1（先写、预期失败）⚠️
 
-- [ ] T016 [P] [US1] 编写成功路径组件测试于 tests/PrReviewSubmit.Tests/Component/McpToolInvocationTests.cs（in-memory MCP 调用 submit_pr_review，stub 返回 open PR + 200 review，断言 success JSON 含 reviewId/htmlUrl；捕获 stub 收到的 create review 请求，断言 event=COMMENT、body 与 comments 的 path/line/side/body 与输入一致，覆盖 FR-005/FR-013/SC-001/SC-002）
-- [ ] T017 [P] [US1] 补齐载荷校验单元测试覆盖于 tests/PrReviewSubmit.Tests/Unit/ValidatorTests.cs（合法载荷通过；comments 空数组合法；owner/repo trim 后非空；pullNumber ≥ 1；内容 UTF-8 原样透传；组件已在 T013 实现，本任务为覆盖补齐，新发现缺陷按先失败再修复）
+- [X] T016 [P] [US1] 编写成功路径组件测试于 tests/PrReviewSubmit.Tests/Component/McpToolInvocationTests.cs（in-memory MCP 调用 submit_pr_review，stub 返回 open PR + 200 review，断言 success JSON 含 reviewId/htmlUrl；捕获 stub 收到的 create review 请求，断言 event=COMMENT、body 与 comments 的 path/line/side/body 与输入一致，覆盖 FR-005/FR-013/SC-001/SC-002）
+- [X] T017 [P] [US1] 补齐载荷校验单元测试覆盖于 tests/PrReviewSubmit.Tests/Unit/ValidatorTests.cs（合法载荷通过；comments 空数组合法；owner/repo trim 后非空；pullNumber ≥ 1；内容 UTF-8 原样透传；组件已在 T013 实现，本任务为覆盖补齐，新发现缺陷按先失败再实现）
 
 ### Implementation for User Story 1
 
-- [ ] T018 [P] [US1] 创建 submit_pr_review 工具于 src/PrReviewSubmit/MCP/ReviewSubmitTool.cs（[McpServerToolType]/[McpServerTool]；参数名/类型/必填与 contracts/submit-review.schema.json 一致）
-- [ ] T019 [P] [US1] 实现 MCP stdio 宿主于 src/PrReviewSubmit/Program.cs（AddMcpServer + WithStdioServerTransport + WithToolsFromAssembly）
-- [ ] T020 [US1] 实现成功编排于 src/PrReviewSubmit/MCP/ReviewSubmitTool.cs（本地校验 → IGitHubReviewClient 令牌交换 → PR 状态核验 → 单次提交 → ToolJsonContext 序列化成功结果）
+- [X] T018 [P] [US1] 创建 submit_pr_review 工具于 src/PrReviewSubmit/MCP/ReviewSubmitTool.cs（[McpServerToolType]/[McpServerTool]；参数名/类型/必填与 contracts/submit-review.schema.json 一致）
+- [X] T019 [P] [US1] 实现 MCP stdio 宿主于 src/PrReviewSubmit/Program.cs（AddMcpServer + WithStdioServerTransport + WithToolsFromAssembly）
+- [X] T020 [US1] 实现成功编排于 src/PrReviewSubmit/MCP/ReviewSubmitTool.cs（本地校验 → IGitHubReviewClient 令牌交换 → PR 状态核验 → 单次提交 → ToolJsonContext 序列化成功结果）
 
 **Checkpoint**: User Story 1 可独立测试（stub 测试 + quickstart 场景 A/F）
 
