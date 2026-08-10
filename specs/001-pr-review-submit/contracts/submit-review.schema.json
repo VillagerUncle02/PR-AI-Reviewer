@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pr-ai-reviewer.local/schemas/submit-pr-review-input.schema.json",
+  "title": "SubmitPrReviewInput",
+  "description": "submit_pr_review 工具输入：显式目标 + 整体结论 + 逐文件评论。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["owner", "repo", "pullNumber", "body", "comments"],
+  "properties": {
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "description": "目标账号（owner），trim 后非空，显式指定，无默认值；不设长度上限（CHK167/CHK173）。"
+    },
+    "repo": {
+      "type": "string",
+      "minLength": 1,
+      "description": "目标仓库名（不含 .git 后缀），trim 后非空；不设长度上限（CHK167/CHK173）。"
+    },
+    "pullNumber": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "目标 PR 编号。"
+    },
+    "body": {
+      "type": "string",
+      "minLength": 1,
+      "description": "整体审查结论（trim 后非空）。"
+    },
+    "comments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "line", "side", "body"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "相对文件路径（本地仅校验非空）；须在目标 PR 的 file change 范围内（规范性由 GitHub 判定，FR-014）。"
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "文件中的行号（须落在目标 PR 的 file change 范围内；越界由 GitHub 422 判定，FR-014）。"
+          },
+          "side": {
+            "type": "string",
+            "enum": ["LEFT", "RIGHT"],
+            "description": "代码侧：LEFT=删除行（旧文件行号），RIGHT=新增/上下文行。"
+          },
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "description": "评论正文（trim 后非空）。"
+          }
+        }
+      }
+    }
+  }
+}

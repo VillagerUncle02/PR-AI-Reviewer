@@ -6,6 +6,7 @@ private-key/
 *.pfx
 .env
 .env.*
+.git-credential-helper.cmd
 
 # .NET build outputs
 bin/
@@ -25,3 +26,5 @@ Thumbs.db
 *.log
 logs/
 
+# Generated caches
+.specify/extensions/.cache/
