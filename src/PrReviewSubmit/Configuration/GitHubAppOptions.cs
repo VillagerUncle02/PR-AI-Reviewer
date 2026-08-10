@@ -9,6 +9,7 @@ public sealed class GitHubAppOptions
     public const string BaseUrl = "https://api.github.com";
     public const string ApiVersionHeader = "X-GitHub-Api-Version";
     public const string ApiVersion = "2022-11-28";
+    public const string UserAgent = "PR-AI-Reviewer-MCP/1.0";
     public const string DefaultPrivateKeyPath = "private-key/github-app.pem";
 
     public required long AppId { get; init; }

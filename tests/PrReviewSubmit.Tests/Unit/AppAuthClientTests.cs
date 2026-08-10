@@ -44,6 +44,7 @@ public class AppAuthClientTests
         Assert.EndsWith("/app/installations/222222/access_tokens", request.RequestUri!.AbsolutePath);
         Assert.StartsWith("Bearer eyJ", request.Headers.Authorization!.ToString());
         Assert.Contains("application/vnd.github+json", request.Headers.Accept.ToString());
+        Assert.Contains(GitHubAppOptions.UserAgent, request.Headers.UserAgent.ToString(), StringComparison.Ordinal);
         Assert.Equal("2022-11-28", request.Headers.GetValues("X-GitHub-Api-Version").Single());
         Assert.Contains("\"repositories\":[\"octo-repo\"]", handler.Bodies[0]);
     }

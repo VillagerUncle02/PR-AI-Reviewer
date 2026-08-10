@@ -31,6 +31,7 @@ public sealed class GitHubAppAuthClient
             $"app/installations/{_options.InstallationId}/access_tokens");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
         request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
+        request.Headers.UserAgent.TryParseAdd(GitHubAppOptions.UserAgent);
         request.Headers.TryAddWithoutValidation(GitHubAppOptions.ApiVersionHeader, GitHubAppOptions.ApiVersion);
         request.Content = JsonContent.Create(new { repositories = new[] { repo } });
 

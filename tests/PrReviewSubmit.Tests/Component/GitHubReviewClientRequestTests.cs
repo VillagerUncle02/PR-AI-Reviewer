@@ -49,7 +49,8 @@ public class GitHubReviewClientRequestTests
             "https://github.com/octo/repo/pull/42#pullrequestreview-123456789",
             review.HtmlUrl);
 
-        _ = Assert.Single(handler.Requests);
+        var request = Assert.Single(handler.Requests);
+        Assert.Contains(GitHubAppOptions.UserAgent, request.Headers.UserAgent.ToString(), StringComparison.Ordinal);
         var body = Assert.Single(handler.Bodies)!;
         using var json = JsonDocument.Parse(body);
         var root = json.RootElement;

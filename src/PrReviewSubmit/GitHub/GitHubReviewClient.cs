@@ -141,6 +141,7 @@ public sealed class GitHubReviewClient : IGitHubReviewClient
     {
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
+        request.Headers.UserAgent.TryParseAdd(GitHubAppOptions.UserAgent);
         request.Headers.TryAddWithoutValidation(GitHubAppOptions.ApiVersionHeader, GitHubAppOptions.ApiVersion);
     }
 
