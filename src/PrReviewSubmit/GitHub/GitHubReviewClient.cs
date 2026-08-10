@@ -79,7 +79,7 @@ public sealed class GitHubReviewClient : IGitHubReviewClient
             @event = "COMMENT",
             body,
             comments = comments
-                .Select(c => new { c.Path, c.Line, c.Side, c.Body })
+                .Select(c => new { path = c.Path, line = c.Line, side = c.Side, body = c.Body })
                 .ToArray(),
         };
 

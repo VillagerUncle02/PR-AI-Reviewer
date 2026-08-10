@@ -5,7 +5,8 @@ namespace PrReviewSubmit.Json;
 
 [JsonSourceGenerationOptions(
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
-    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+    UseStringEnumConverter = true)]
 [JsonSerializable(typeof(ReviewSubmitRequest))]
 [JsonSerializable(typeof(ReviewComment))]
 [JsonSerializable(typeof(IReadOnlyList<ReviewComment>))]
