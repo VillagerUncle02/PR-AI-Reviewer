@@ -75,7 +75,8 @@ public sealed class GitHubAppAuthClient
     public string CreateJwt()
     {
         using var rsa = ReadPrivateKey();
-        var credentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256);
+        var key = new RsaSecurityKey(rsa.ExportParameters(includePrivateParameters: true));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256);
         var now = DateTimeOffset.UtcNow;
         return new JwtSecurityTokenHandler().CreateEncodedJwt(new SecurityTokenDescriptor
         {
