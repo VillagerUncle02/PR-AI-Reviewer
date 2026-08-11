@@ -23,7 +23,7 @@ description: "Task list for feature 002-package-release"
 
 **Purpose**: 仓库级发布基础设施准备
 
-- [ ] T001 在 .gitignore 增加 `dist/` 排除规则，确保发布产物不进入版本库
+- [x] T001 在 .gitignore 增加 `dist/` 排除规则，确保发布产物不进入版本库
 
 ---
 
@@ -31,7 +31,7 @@ description: "Task list for feature 002-package-release"
 
 **Purpose**: 发布可靠性基础设施，阻塞后续所有故事
 
-- [ ] T002 [P] 在 scripts/gates.ps1 增加对 scripts/*.ps1 的 PowerShell AST 语法检查（发布脚本错误提前暴露；门禁增强，非 FR 直接要求，源于 research D15）
+- [x] T002 [P] 在 scripts/gates.ps1 增加对 scripts/*.ps1 的 PowerShell AST 语法检查（发布脚本错误提前暴露；门禁增强，非 FR 直接要求，源于 research D15）
 
 **Checkpoint**: 门禁可发现发布脚本语法问题；用户故事可开始
 

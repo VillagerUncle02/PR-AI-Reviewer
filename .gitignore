@@ -11,6 +11,7 @@ private-key/
 # .NET build outputs
 bin/
 obj/
+dist/
 *.user
 *.suo
 *.userprefs
