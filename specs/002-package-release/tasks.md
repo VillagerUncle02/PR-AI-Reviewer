@@ -48,7 +48,7 @@ description: "Task list for feature 002-package-release"
 - [x] T003 [P] [US1] 实现 scripts/publish.ps1：-Version（默认 1.0.0，SemVer 校验）、已跟踪工作区干净校验、清理旧 dist/<version>/、dotnet publish（win-x64 框架依赖）、写 VERSION 与 BUILD_INFO、敏感扫描（文件名黑名单 + 内容模式，命中退出 1）、生成 zip 与 sha256（dist/ 根）、-DryRun 预览、退出码 0/1/2 —— scripts/publish.ps1
 - [x] T004 [P] [US1] 实现 scripts/smoke-published.ps1：GITHUB_SMOKE_* 等 env 必填校验（缺失退出 2 并列出）、解压 zip 到临时目录、MCP stdio 直连解压副本（initialize / tools/list / tools/call submit_pr_review）、断言 tools/list 仅返回 submit_pr_review（SC-007）、回读校验内容一致与 bot 标识、写审计 notes/reviews/<version>-smoke.md、可重复执行、-DryRun —— scripts/smoke-published.ps1
 - [x] T005 [US1] 按 quickstart 场景 1 验证 publish.ps1：产物/VERSION/BUILD_INFO/zip/sha256/敏感扫描通过，同版本重复构建校验和可复算 —— 验证（quickstart.md）
-- [ ] T006 [US1] 按 quickstart 场景 2 用发布产物在真实测试 PR 完成一次冒烟（bot review + 回读一致），确认审计文件生成 —— 验证（需 GITHUB_SMOKE_* env）
+- [x] T006 [US1] 按 quickstart 场景 2 用发布产物在真实测试 PR 完成一次冒烟（bot review + 回读一致），确认审计文件生成 —— 验证（需 GITHUB_SMOKE_* env）
 
 **Checkpoint**: US1 完整可用——产物可生成、可验证、可真实冒烟
 
