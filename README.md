@@ -51,6 +51,8 @@
 
 ## 发布与安装
 
+> 完整的分步安装指南（发布包获取、Codex 注册、验证、升级/回退/卸载、排错）见 [INSTALL.md](INSTALL.md)。
+
 本工具以 **Windows x64 框架依赖** 形态发布：发布包内不含 .NET 运行时，目标机器需已安装 **.NET 10 运行时**（无需 SDK）。发布产物不含私钥或任何敏感配置，安装时通过三项环境变量指向本地的 GitHub App 配置。
 
 > 发布/安装的完整契约与验证场景见 [specs/002-package-release/contracts/codex-install.md](specs/002-package-release/contracts/codex-install.md)、[specs/002-package-release/contracts/release-cli.md](specs/002-package-release/contracts/release-cli.md) 与 [specs/002-package-release/quickstart.md](specs/002-package-release/quickstart.md)。
