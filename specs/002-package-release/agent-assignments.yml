@@ -1,0 +1,83 @@
+# Agent Assignments
+# Feature: 002-package-release
+# Generated: 2026-08-11
+# Command: /speckit.agent-assign.assign
+
+agents_scanned:
+  - name: "UI Designer"
+    source: "project"
+    description: "Expert UI designer specializing in visual design systems, component libraries, and pixel-perfect interface creation."
+  - name: "Backend Architect"
+    source: "project"
+    description: "Senior backend architect specializing in scalable system design, database architecture, API development, and cloud infrastructure."
+  - name: "Code Reviewer"
+    source: "project"
+    description: "Expert code reviewer providing constructive, actionable feedback focused on correctness, maintainability, security, and performance."
+  - name: "Desktop App Engineer"
+    source: "project"
+    description: "Expert desktop application engineer for Electron and Tauri."
+  - name: "DevOps Automator"
+    source: "project"
+    description: "Expert DevOps engineer specializing in infrastructure automation, CI/CD pipeline development, and cloud operations."
+  - name: "Frontend Developer"
+    source: "project"
+    description: "Expert frontend developer specializing in modern web technologies."
+  - name: "Git Workflow Master"
+    source: "project"
+    description: "Expert in Git workflows, branching strategies, and version control best practices."
+  - name: "Minimal Change Engineer"
+    source: "project"
+    description: "Engineering specialist focused on minimum-viable diffs."
+  - name: "Multi-Agent Systems Architect"
+    source: "project"
+    description: "Systems architect specializing in the design, coordination, and governance of multi-agent AI pipelines."
+  - name: "Prompt Engineer"
+    source: "project"
+    description: "Specialist in crafting, testing, and systematically optimizing prompts for LLMs."
+  - name: "Software Architect"
+    source: "project"
+    description: "Expert software architect specializing in system design, domain-driven design, and architectural patterns."
+  - name: "Technical Writer"
+    source: "project"
+    description: "Expert technical writer specializing in developer documentation, API references, README files, and tutorials."
+
+assignments:
+  T001:
+    agent: "Git Workflow Master"
+    reason: ".gitignore/仓库版本控制配置"
+  T002:
+    agent: "DevOps Automator"
+    reason: "门禁/CI 脚本增强"
+  T003:
+    agent: "DevOps Automator"
+    reason: "构建与发布产物流水线"
+  T004:
+    agent: "Backend Architect"
+    reason: "MCP 协议 + GitHub API 集成冒烟"
+  T005:
+    agent: "DevOps Automator"
+    reason: "随 T003 发布产物验证"
+  T006:
+    agent: "Backend Architect"
+    reason: "随 T004 真实冒烟验证"
+  T007:
+    agent: "Technical Writer"
+    reason: "README 发布与安装文档编写"
+  T008:
+    agent: "Technical Writer"
+    reason: "随 T007 安装验证（含 SC-006 计时）"
+  T009:
+    agent: "DevOps Automator"
+    reason: "发布流程自动化（tag/Release/审计）"
+  T010:
+    agent: "DevOps Automator"
+    reason: "随 T009 发布验证"
+  T011:
+    agent: "DevOps Automator"
+    reason: "全量门禁执行"
+  T012:
+    agent: "Technical Writer"
+    reason: "文档一致性终审"
+  T013:
+    agent: "Git Workflow Master"
+    reason: "分支/提交/推送"

@@ -1,0 +1,10 @@
+# speckit-implement-loop 项目配置
+# 2026-08-11 固化：审查角色使用项目 .claude/agents 中的专职角色
+
+language: "zh-CN"
+
+# AI 审查（第 6/10 步）角色：项目 .claude/agents/engineering-code-reviewer.md
+review.code_reviewer: "Code Reviewer"
+
+# CI/流水线类 PR 的交叉意见角色：项目 .claude/agents/engineering-devops-automator.md
+review.devops_opinion: "DevOps Automator"

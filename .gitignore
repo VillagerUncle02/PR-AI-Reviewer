@@ -11,6 +11,7 @@ private-key/
 # .NET build outputs
 bin/
 obj/
+dist/
 *.user
 *.suo
 *.userprefs
@@ -21,6 +22,9 @@ obj/
 *.swp
 .DS_Store
 Thumbs.db
+
+# 项目级 MCP 注册示例可能含本机路径，禁止入库（FR-014）
+.codex/config.toml
 
 # Logs
 *.log
