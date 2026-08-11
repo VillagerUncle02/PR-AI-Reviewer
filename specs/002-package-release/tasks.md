@@ -62,7 +62,7 @@ description: "Task list for feature 002-package-release"
 
 ### Implementation for User Story 2
 
-- [ ] T007 [US2] 在 README.md 新增"发布与安装"章节：产物生成命令、Codex 注册（全局 codex mcp add + 项目级占位符 config.toml，不提交真实配置）、三项 env 语义、验证步骤、升级/回退/卸载、排错清单（配置缺失、服务不可见、运行时缺失、gh 凭据）—— README.md
+- [x] T007 [US2] 在 README.md 新增"发布与安装"章节：产物生成命令、Codex 注册（全局 codex mcp add + 项目级占位符 config.toml，不提交真实配置）、三项 env 语义、验证步骤、升级/回退/卸载、排错清单（配置缺失、服务不可见、运行时缺失、gh 凭据）—— README.md
 - [ ] T008 [US2] 按 quickstart 场景 3 验证安装：codex mcp list 可见 pr-ai-reviewer，新 Codex 会话调用 submit_pr_review 成功，并记录"注册到首次成功调用"耗时对照 SC-006（≤30 分钟）—— 验证
 
 **Checkpoint**: US1 + US2 闭环——产物可安装、Agent 可用
