@@ -77,7 +77,7 @@ description: "Task list for feature 002-package-release"
 
 ### Implementation for User Story 3
 
-- [ ] T009 [US3] 实现 scripts/release.ps1：自动运行 gates、前置校验（产物与 VERSION/BUILD_INFO 存在、VERSION 内容==请求版本、BUILD_INFO.commit==origin/main HEAD、sha256 匹配、冒烟审计 success、gh auth status、tag 不存在或存在但无 Release（补建路径））、notes 生成（git log 自上一 tag，-NotesFile 可人工编辑）、tag+push 或跳过、gh release create、写审计 notes/reviews/<version>-release.md、-DryRun、退出码 0/1/2 —— scripts/release.ps1
+- [x] T009 [US3] 实现 scripts/release.ps1：自动运行 gates、前置校验（产物与 VERSION/BUILD_INFO 存在、VERSION 内容==请求版本、BUILD_INFO.commit==origin/main HEAD、sha256 匹配、冒烟审计 success、gh auth status、tag 不存在或存在但无 Release（补建路径））、notes 生成（git log 自上一 tag，-NotesFile 可人工编辑）、tag+push 或跳过、gh release create、写审计 notes/reviews/<version>-release.md、-DryRun、退出码 0/1/2 —— scripts/release.ps1
 - [ ] T010 [US3] 按 quickstart 场景 4 先 -DryRun 验证校验与预览，再实际发布 v1.0.0，核对 GitHub Release 资产（zip+sha256）与审计文件 —— 验证
 
 **Checkpoint**: 全部用户故事独立可用，版本可追溯
