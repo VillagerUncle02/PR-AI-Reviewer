@@ -172,7 +172,7 @@ GitHub App 私钥保存在本地 `private-key/` 目录，该目录已被 `.gitig
 
 **已实现**：Phase 1-6（T001-T038）任务全部完成。实现完成，待人工审查与真实 GitHub App 凭据冒烟验证。
 
-**002 打包发布**：发布脚本与安装文档已实现，文档一致性终审完成；正式发布 v1.0.0 验证（T010）待 PR 合并后执行。
+**002 打包发布**：发布脚本与安装文档已实现，文档一致性终审完成；v1.0.0 已正式发布（[GitHub Release](https://github.com/VillagerUncle02/PR-AI-Reviewer/releases/tag/v1.0.0)，含 zip + sha256 资产）。
 
 - 任务清单：[specs/001-pr-review-submit/tasks.md](specs/001-pr-review-submit/tasks.md)
 - 端到端验证指南：[specs/001-pr-review-submit/quickstart.md](specs/001-pr-review-submit/quickstart.md)
