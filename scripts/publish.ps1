@@ -169,8 +169,52 @@ try {
     Write-Output "敏感扫描通过（0 个命中）"
 
     # ---- 8. 生成 zip（dist/ 根；产物平铺，保留 runtimes/ 子目录）----
+    # 可复算性（SC-001 / T005）：Compress-Archive 无法固定条目时间戳，改用
+    # System.IO.Compression.ZipArchive 手动创建；所有条目使用固定 LastWriteTime，
+    # 并按相对路径（正斜杠）序数排序，保证同版本重复构建产物字节一致。
     Write-Output "== 生成 zip =="
-    Compress-Archive -Path (Join-Path $OutDir "*") -DestinationPath $ZipPath -Force
+    Add-Type -AssemblyName System.IO.Compression
+    $FixedTimestamp = [DateTime]::new(1980, 1, 1, 0, 0, 0, [DateTimeKind]::Utc)
+
+    $ZipEntries = [System.Collections.Generic.List[object]]::new()
+    foreach ($file in Get-ChildItem -LiteralPath $OutDir -Recurse -File) {
+        $relativePath = $file.FullName.Substring($OutDir.Length).TrimStart([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar).Replace('\', '/')
+        $ZipEntries.Add([pscustomobject]@{ RelativePath = $relativePath; File = $file })
+    }
+    $ZipEntries.Sort([System.Comparison[object]] {
+        param($left, $right)
+        [StringComparer]::Ordinal.Compare($left.RelativePath, $right.RelativePath)
+    })
+
+    $fileStream = [IO.File]::Create($ZipPath)
+    try {
+        $zipArchive = New-Object System.IO.Compression.ZipArchive($fileStream, [System.IO.Compression.ZipArchiveMode]::Create)
+        try {
+            foreach ($entry in $ZipEntries) {
+                $zipEntry = $zipArchive.CreateEntry($entry.RelativePath, [System.IO.Compression.CompressionLevel]::Optimal)
+                $zipEntry.LastWriteTime = $FixedTimestamp
+                $inputStream = [IO.File]::OpenRead($entry.File.FullName)
+                try {
+                    $outputStream = $zipEntry.Open()
+                    try {
+                        $inputStream.CopyTo($outputStream)
+                    }
+                    finally {
+                        $outputStream.Dispose()
+                    }
+                }
+                finally {
+                    $inputStream.Dispose()
+                }
+            }
+        }
+        finally {
+            $zipArchive.Dispose()
+        }
+    }
+    finally {
+        $fileStream.Dispose()
+    }
     if (-not (Test-Path -LiteralPath $ZipPath)) {
         throw "zip 生成失败: $ZipPath"
     }
