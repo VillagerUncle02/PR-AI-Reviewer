@@ -75,7 +75,7 @@ pwsh scripts/publish.ps1 -Version 1.0.0
 pwsh scripts/publish.ps1 -Version 1.0.0 -DryRun
 ```
 
-退出码约定：`0` 成功；`1` 前置校验或执行失败（stderr 含明确原因）；`2` 参数或环境变量缺失/非法。正式发布（git tag + GitHub Release）须先完成真实冒烟，再执行 `pwsh scripts/release.ps1 -Version 1.0.0`（该脚本由 002 任务 T009 提供，落地前请勿直接执行），详见 [quickstart 场景 4](specs/002-package-release/quickstart.md)。
+退出码约定：`0` 成功；`1` 前置校验或执行失败（stderr 含明确原因）；`2` 参数或环境变量缺失/非法。正式发布（git tag + GitHub Release）须先完成真实冒烟，再执行 `pwsh scripts/release.ps1 -Version 1.0.0`（脚本由 002 任务 T009 提供，见 [quickstart 场景 4](specs/002-package-release/quickstart.md)）。
 
 ### 注册到 Codex（全局）
 
@@ -140,7 +140,7 @@ env = {
 | `codex mcp list` 看不到 `pr-ai-reviewer` | 注册未生效、同名服务冲突或会话未重启 | 重新执行注册（同名先 `codex mcp remove`）；重启 Codex 会话/客户端后复查 |
 | 调用 `submit_pr_review` 失败或 PR 未出现 review | 载荷或目标 PR 条件不正确，或 GitHub 限流、网络异常 | 先修正载荷与条件再重发；仅当返回 `details.retryable=true`（`RATE_LIMITED`/`NETWORK_ERROR`）时才可重试，其余错误不要盲目重试；详见 [重试与去重语义](#重试与去重语义) |
 | exe 无法启动，提示缺少 .NET 运行时 | 目标机未安装 .NET 10 运行时（框架依赖产物不含运行时） | 安装 .NET 10 运行时（无需 SDK），用 `dotnet --list-runtimes` 确认 |
-| `release.ps1`（由 002 任务 T009 提供，落地前请勿直接执行）前置校验报 `gh auth status` 失败 | gh 凭据失效（keyring 凭据或 `GH_TOKEN` 无效） | `gh auth login` 重新认证或刷新 `GH_TOKEN`；工具运行本身使用 GitHub App 凭据，不依赖 gh |
+| `release.ps1`（002 发布脚本）前置校验报 `gh auth status` 失败 | gh 凭据失效（keyring 凭据或 `GH_TOKEN` 无效） | `gh auth login` 重新认证或刷新 `GH_TOKEN`；工具运行本身使用 GitHub App 凭据，不依赖 gh |
 
 ## 重试与去重语义
 
@@ -166,10 +166,15 @@ GitHub App 私钥保存在本地 `private-key/` 目录，该目录已被 `.gitig
 项目遵循 spec-kit 规约驱动工作流（constitution → specify → plan → tasks → implement）。
 
 - 当前功能规格：[specs/001-pr-review-submit/spec.md](specs/001-pr-review-submit/spec.md)
+- 002 打包发布规格：[specs/002-package-release/spec.md](specs/002-package-release/spec.md)
 
 ## 项目状态
 
 **已实现**：Phase 1-6（T001-T038）任务全部完成。实现完成，待人工审查与真实 GitHub App 凭据冒烟验证。
 
+**002 打包发布**：发布脚本与安装文档已实现，文档一致性终审完成；正式发布 v1.0.0 验证（T010）与分支提交（T013）待完成。
+
 - 任务清单：[specs/001-pr-review-submit/tasks.md](specs/001-pr-review-submit/tasks.md)
 - 端到端验证指南：[specs/001-pr-review-submit/quickstart.md](specs/001-pr-review-submit/quickstart.md)
+- 002 任务清单：[specs/002-package-release/tasks.md](specs/002-package-release/tasks.md)
+- 002 验证指南：[specs/002-package-release/quickstart.md](specs/002-package-release/quickstart.md)

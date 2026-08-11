@@ -15,7 +15,7 @@
 1. `scripts/publish.ps1 -Version <v>` → 产物 + VERSION + zip + sha256；
 2. `scripts/smoke-published.ps1 -Version <v>` → 解压 zip 后对副本真实上传冒烟；
 3. `scripts/release.ps1 -Version <v>` →
-   - 自动校验：运行 `scripts/gates.ps1`；产物与 VERSION/BUILD_INFO 存在、`BUILD_INFO.commit` 等于远程 main HEAD、sha256 匹配、冒烟审计记录 success、`gh auth status` 通过、tag/Release 不存在；
+   - 自动校验：运行 `scripts/gates.ps1`；产物与 VERSION/BUILD_INFO 存在、`BUILD_INFO.commit` 等于远程 main HEAD、sha256 匹配、冒烟审计记录 success、`gh auth status` 通过、tag 不存在，或 tag 已存在但无对应 Release（补建路径）；
    - 生成发布说明（Markdown：标题 + 版本与日期 + 变更分类（修复/新功能/其他）+ 自上一 tag 的 git log 摘要；首次发布无上一 tag 时用仓库全部历史摘要或人工撰写；可人工编辑）；
    - tag 不存在 → `git tag v<v>` + `git push origin v<v>`；tag 已存在且无 Release → 跳过打 tag（FR-015）；
    - `gh release create v<v> <zip> <sha256> --title "PrReviewSubmit v<v>" --notes-file <notes>`；

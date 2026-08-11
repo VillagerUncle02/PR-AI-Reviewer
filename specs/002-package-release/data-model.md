@@ -33,7 +33,7 @@
 
 - 字段：`serverName`（`pr-ai-reviewer`）、`command`（发布产物 exe 绝对路径）、`env`（`GITHUB_APP_ID`、`GITHUB_APP_INSTALLATION_ID`、`GITHUB_PRIVATE_KEY_PATH`）、`scope`（global / project）。
 - 校验规则：
-  - 三项 env 必需且有效，缺失/非法时服务启动即失败（沿用 FR-015）；
+  - 三项 env 必需且有效，缺失/非法时服务启动即失败（沿用 001 FR-015 启动即失败语义）；
   - 私钥路径为本地绝对路径，指向 `private-key/` 下文件，绝不进入版本库（FR-007）；
   - `codex mcp list` 可见（FR-005）。
   - 项目级示例仅以 README 占位符提供，不提交真实配置（FR-014）。

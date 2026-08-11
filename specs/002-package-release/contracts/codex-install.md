@@ -9,9 +9,9 @@
 
 | 变量 | 语义 | 示例 |
 |------|------|------|
-| `GITHUB_APP_ID` | GitHub App ID | `4525509` |
-| `GITHUB_APP_INSTALLATION_ID` | App 安装 ID | `152380612` |
-| `GITHUB_PRIVATE_KEY_PATH` | 私钥文件本地绝对路径 | `D:\...\private-key\vu-s-....pem` |
+| `GITHUB_APP_ID` | GitHub App ID（正整数） | `<APP_ID>` |
+| `GITHUB_APP_INSTALLATION_ID` | App 安装 ID（正整数） | `<INSTALLATION_ID>` |
+| `GITHUB_PRIVATE_KEY_PATH` | 私钥文件本地绝对路径 | `<绝对路径>\private-key\<key-file>.pem` |
 
 - 私钥路径含空格/非 ASCII 时，注册命令须正确引用（FR-005）。
 - 私钥文件只在本地，绝不进入版本库或发布产物（FR-007）。

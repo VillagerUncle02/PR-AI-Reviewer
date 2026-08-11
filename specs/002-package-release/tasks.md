@@ -88,8 +88,8 @@ description: "Task list for feature 002-package-release"
 
 **Purpose**: 跨故事收尾
 
-- [ ] T011 运行全量门禁 scripts/gates.ps1 确认通过（含新增发布脚本语法检查）
-- [ ] T012 文档一致性终审：spec/plan/research/contracts/quickstart/README 的关键决策与引用一致（含 release-cli.md 引用、版本号、占位符示例）
+- [x] T011 运行全量门禁 scripts/gates.ps1 确认通过（含新增发布脚本语法检查）
+- [x] T012 文档一致性终审：spec/plan/research/contracts/quickstart/README 的关键决策与引用一致（含 release-cli.md 引用、版本号、占位符示例）
 - [ ] T013 按 Conventional Commits 提交并推送 002 分支（推送方式按用户指示：PR 或直推 main）
 
 ---

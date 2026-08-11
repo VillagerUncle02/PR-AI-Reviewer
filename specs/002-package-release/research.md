@@ -106,10 +106,10 @@
 ## 风险与缓解
 
 - 沙箱/离线环境 NuGet 漏洞告警 NU1900：仅告警不阻断；构建产物不受影响。
-- 目标机未安装 .NET 10 运行时：文档前置要求 + 启动时明确错误（沿用 FR-015 失败透明）。
+- 目标机未安装 .NET 10 运行时：文档前置要求 + 启动时明确错误（沿用 001 FR-015 启动即失败语义）。
 - `gh` keyring 默认凭据失效：`release.ps1`/`smoke-published.ps1` 前置 `gh auth status` 检查，失败即退出并提示使用 `GH_TOKEN`。
 - 发布后才发现缺陷：禁止覆盖已有 tag/Release，修复后升 PATCH 版本重新发布。
 
 ## 结论
 
-所有 NEEDS CLARIFICATION 已消除，设计满足宪法与 002 规格（FR-001~FR-011、SC-001~SC-007）。
+所有 NEEDS CLARIFICATION 已消除，设计满足宪法与 002 规格（FR-001~FR-015、SC-001~SC-007）。

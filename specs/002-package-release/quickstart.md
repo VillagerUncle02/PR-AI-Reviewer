@@ -32,7 +32,7 @@ pwsh scripts/smoke-published.ps1 -Version 1.0.0
 
 预期结果：
 
-- MCP 直连发布产物 exe，`tools/list` 仅含 `submit_pr_review`；
+- MCP stdio 直连解压副本（脚本先解压 zip 到临时目录），`tools/list` 仅含 `submit_pr_review`；
 - 测试 PR 上出现一条带 bot 标识（`user.type == Bot`）的 review；
 - 回读内容与输入一致，脚本输出 `status=success`，退出码 0。
 - 可重复执行：重试产生的新 review 不清理，以最近一次成功为准（FR-013）。
@@ -41,10 +41,10 @@ pwsh scripts/smoke-published.ps1 -Version 1.0.0
 
 ```powershell
 codex mcp add pr-ai-reviewer `
-  --env GITHUB_APP_ID=4525509 `
-  --env GITHUB_APP_INSTALLATION_ID=152380612 `
-  --env GITHUB_PRIVATE_KEY_PATH=D:\Workbench\Agent\PR-AI-Reviewer\private-key\<key-file>.pem `
-  -- D:\Workbench\Agent\PR-AI-Reviewer\dist\1.0.0\PrReviewSubmit.exe
+  --env GITHUB_APP_ID=<APP_ID> `
+  --env GITHUB_APP_INSTALLATION_ID=<INSTALLATION_ID> `
+  --env GITHUB_PRIVATE_KEY_PATH=<绝对路径>\private-key\<key-file>.pem `
+  -- <绝对路径>\dist\1.0.0\PrReviewSubmit.exe
 codex mcp list
 ```
 
@@ -57,6 +57,12 @@ codex mcp list
 ## 场景 4：正式发布（SC-005/FR-004/FR-009）
 
 ```powershell
+pwsh scripts/release.ps1 -Version 1.0.0 -DryRun
+```
+
+先以 `-DryRun` 预览校验结果与将执行的变更（不创建 tag/Release），校验通过后实际发布：
+
+```powershell
 pwsh scripts/release.ps1 -Version 1.0.0
 ```
 
@@ -64,7 +70,7 @@ pwsh scripts/release.ps1 -Version 1.0.0
 
 - 创建唯一 git tag `v1.0.0` 并推送；
 - GitHub Release 含发布说明、zip 与 sha256 资产；
-- 重复执行同一版本明确失败，不覆盖。
+- tag 与 Release 均已存在时重复执行明确失败、不覆盖；tag 已存在但 Release 缺失时自动补建（FR-015）。
 - 发布成功后生成审计文件 `notes/reviews/1.0.0-release.md`。
 
 发布脚本的参数、退出码与 `-DryRun` 预览约定见 `contracts/release-cli.md`。
