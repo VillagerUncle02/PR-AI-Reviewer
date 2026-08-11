@@ -38,12 +38,12 @@
 |----------|------|--------|------|
 | `GITHUB_APP_ID` | 是 | 无 | GitHub App 的 App ID，须为正整数 |
 | `GITHUB_APP_INSTALLATION_ID` | 是 | 无 | GitHub App 的安装 ID（目标仓库所在账号），须为正整数 |
-| `GITHUB_PRIVATE_KEY_PATH` | 否 | `private-key/github-app.pem` | GitHub App 私钥 PEM 文件路径 |
+| `GITHUB_PRIVATE_KEY_PATH` | 否（源码运行） | `private-key/github-app.pem` | GitHub App 私钥 PEM 文件路径；发布形态注册时必填（见"发布与安装"章节） |
 
 ### 私钥约定
 
 - 私钥放在仓库根目录下的 `private-key/` 目录中；该目录已被 `.gitignore` 排除，**任何情况下不得提交进版本库**。
-- 启动时工具会校验私钥文件存在、可读且可解析为 RSA 密钥（FR-015）；缺失或非法时以非零退出码退出，并在 stderr 输出明确错误。
+- 启动时工具会校验私钥文件存在、可读且可解析为 RSA 密钥（001 FR-015，启动即失败语义）；缺失或非法时以非零退出码退出，并在 stderr 输出明确错误。
 
 ### 快速开始
 

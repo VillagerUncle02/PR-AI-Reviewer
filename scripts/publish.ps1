@@ -146,7 +146,9 @@ try {
     # ---- 7. 敏感扫描（仅 dist/<version>/，research D5 / FR-003）----
     Write-Output "== 敏感扫描（仅 dist/$Version/）=="
     $namePattern = '(?i)((^|/)private-key(/|$)|\.(pem|key|p12|pfx)$|(^|/)\.env)'
-    $contentPattern = '(-----BEGIN[^\r\n]*PRIVATE KEY-----|ghp_|github_pat_|gho_|ghs_)'
+    # GitHub 令牌前缀全覆盖：PAT（ghp_）、细粒度 PAT（github_pat_）、OAuth（gho_）、
+    # 用户到服务器（ghu_）、服务器到服务器（ghs_）、刷新令牌（ghr_）（FR-003/SC-003）
+    $contentPattern = '(-----BEGIN[^\r\n]*PRIVATE KEY-----|ghp_|github_pat_|gho_|ghs_|ghu_|ghr_)'
     $sensitiveHits = @()
     Get-ChildItem -LiteralPath $OutDir -Recurse -Force | ForEach-Object {
         $rel = $_.FullName.Substring($OutDir.Length).TrimStart([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar).Replace('\', '/')

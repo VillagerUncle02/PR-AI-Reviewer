@@ -195,21 +195,37 @@ try {
         }
         else {
             $buildCommit = $commitMatch.Groups[1].Value.ToLowerInvariant()
-            $originMainOut = & git -C $RepoRoot rev-parse origin/main 2>&1
-            if ($LASTEXITCODE -ne 0) {
-                $commitDetail = "无法获取 origin/main HEAD（git rev-parse 失败）：$((($originMainOut | Out-String)).Trim())"
-            }
-            else {
-                $originMain = ($originMainOut | Out-String).Trim()
-                if ($originMain -notmatch '^[0-9a-f]{40}$') {
-                    $commitDetail = "origin/main 返回值异常: $originMain"
+            # 非 DryRun：先 git fetch origin main，确保本地 origin/main ref 最新，
+            # 避免误通过（本地 ref 落后）或误拒绝（本地 ref 超前）；
+            # DryRun：遵守“不调用 GitHub”契约，不做 fetch，仅读取本地 ref。
+            $fetchFailed = $false
+            if (-not $DryRun) {
+                $fetchOut = & git -C $RepoRoot fetch origin main 2>&1
+                if ($LASTEXITCODE -ne 0) {
+                    $fetchFailed = $true
+                    $commitDetail = "git fetch origin main 失败（退出码 $LASTEXITCODE）：$((($fetchOut | Out-String)).Trim())"
                 }
-                elseif ($buildCommit -ceq $originMain) {
-                    $commitOk = $true
-                    $commitDetail = "BUILD_INFO.commit=$buildCommit == origin/main HEAD"
+            }
+            if (-not $fetchFailed) {
+                $originMainOut = & git -C $RepoRoot rev-parse origin/main 2>&1
+                if ($LASTEXITCODE -ne 0) {
+                    $commitDetail = "无法获取 origin/main HEAD（git rev-parse 失败）：$((($originMainOut | Out-String)).Trim())"
                 }
                 else {
-                    $commitDetail = "BUILD_INFO.commit=$buildCommit != origin/main HEAD=$originMain（变更未合入 main，或 origin/main 过期需先 git fetch origin main）"
+                    $originMain = ($originMainOut | Out-String).Trim()
+                    if ($originMain -notmatch '^[0-9a-f]{40}$') {
+                        $commitDetail = "origin/main 返回值异常: $originMain"
+                    }
+                    elseif ($buildCommit -ceq $originMain) {
+                        $commitOk = $true
+                        $commitDetail = "BUILD_INFO.commit=$buildCommit == origin/main HEAD"
+                    }
+                    else {
+                        $commitDetail = "BUILD_INFO.commit=$buildCommit != origin/main HEAD=$originMain（变更未合入 main）"
+                        if ($DryRun) {
+                            $commitDetail += "；DryRun 未 fetch，若本地 origin/main 过期请先 git fetch origin main"
+                        }
+                    }
                 }
             }
         }
@@ -464,9 +480,12 @@ try {
             throw "git log 获取变更摘要失败（退出码 $LASTEXITCODE）"
         }
 
-        $featLines = @($logLines | Where-Object { ([string]$_) -match '^(feat|feature)(\([^)]*\))?\s*:' })
-        $fixLines = @($logLines | Where-Object { ([string]$_) -match '^(fix|bugfix)(\([^)]*\))?\s*:' })
-        $otherLines = @($logLines | Where-Object { ([string]$_) -notmatch '^(feat|feature|fix|bugfix)(\([^)]*\))?\s*:' })
+        # git log --oneline 行首为短哈希，先跳过哈希再匹配 subject；
+        # 分类正则支持 Conventional Commits breaking 标记（如 feat!: ...），
+        # 避免 breaking 提交落入“其他”分类。
+        $featLines = @($logLines | Where-Object { ([string]$_) -match '^[0-9a-f]+\s+(feat|feature)(\([^)]*\))?!?\s*:' })
+        $fixLines = @($logLines | Where-Object { ([string]$_) -match '^[0-9a-f]+\s+(fix|bugfix)(\([^)]*\))?!?\s*:' })
+        $otherLines = @($logLines | Where-Object { ([string]$_) -notmatch '^[0-9a-f]+\s+(feat|feature|fix|bugfix)(\([^)]*\))?!?\s*:' })
 
         $noteLines = [System.Collections.Generic.List[string]]::new()
         $noteLines.Add("# PrReviewSubmit $TagName 发布说明")
