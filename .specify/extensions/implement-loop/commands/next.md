@@ -17,7 +17,7 @@ $ARGUMENTS
 ## Steps
 
 1. 运行 `{SCRIPT}` 解析配置，取得 `FEATURE_DIR`、`BRANCH_PREFIX`、`BRANCH_BASE`、`CHAINED`、`PREPARE_BRANCH_SCRIPT` 等；
-2. 前置确认：当前分支的 PR 已通过 AI 审查（`<REVIEWS_DIR>/<branch>-pr-review.md` 为 PASS）且 CI 绿；若未通过 → 停下，不创建下一分支；
+2. 前置确认：当前分支的 PR 已通过 AI 审查（`<REVIEWS_DIR>/<branch>-pr-review.md` 或分轮文件 `<branch>-pr-review-r<N>.md` 的最新一份为 PASS）且 CI 绿；若未通过 → 停下，不创建下一分支；
 3. 确定下一功能：若 `--feature`/`--branch` 未指定，按用户/分配清单中的下一个 Phase 或用户故事确定；
 4. 创建分支：
 
